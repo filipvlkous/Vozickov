@@ -43,7 +43,6 @@ function AdminVoziky(props) {
       {
         text: "Ano",
         onPress: async () => {
-          console.log("smazano");
           await onDelete(item);
           await props.fetchVoziky();
         },
@@ -85,7 +84,7 @@ function AdminVoziky(props) {
               </View>
             </View>
           )}
-          renderHiddenItem={({ item, rowMap }) => (
+          renderHiddenItem={({ item }) => (
             <View
               style={{
                 alignItems: "flex-end",
@@ -135,7 +134,7 @@ const styles = StyleSheet.create({
   touchableContainer: {
     backgroundColor: "red",
     width: 100,
-    height: 100,
+    height: 90,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 8,
@@ -148,17 +147,17 @@ const styles = StyleSheet.create({
 
   cardChiled: {
     flex: 1,
-    padding: 10,
+    padding: 2,
     alignItems: "center",
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginHorizontal: 40,
+    marginHorizontal: 30,
   },
 
   title: {
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: "RobotoBold",
     marginBottom: 5,
+    paddingLeft: 10,
     textTransform: "uppercase",
   },
 

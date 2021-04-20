@@ -75,8 +75,7 @@ export default class App extends Component {
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
           <StatusBar style="auto" />
-
-          <Text>Loading...</Text>
+          <Text style={{ fontWeight: "700", fontSize: 20 }}>Loading...</Text>
         </View>
       );
     }

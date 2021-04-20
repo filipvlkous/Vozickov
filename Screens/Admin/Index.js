@@ -28,7 +28,7 @@ function index(props) {
         name="Uživatelé"
         component={AdminUser}
         options={{
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ color }) => (
             <Feather name="users" color={color} size={26} />
           ),
         }}
@@ -38,7 +38,7 @@ function index(props) {
         name="Přidat vozík"
         component={EmptyScreen}
         options={{
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="camera" color={color} size={26} />
           ),
         }}
@@ -54,7 +54,7 @@ function index(props) {
         name="Vozíky"
         component={AdminVoziky}
         options={{
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ color }) => (
             <FontAwesome name="wheelchair" color={color} size={26} />
           ),
         }}

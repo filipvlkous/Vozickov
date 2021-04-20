@@ -78,7 +78,7 @@ export default function DefaultVozik({ vozik }) {
                       <Text
                         style={{ fontFamily: "RobotoRegular", fontSize: 17 }}
                       >
-                        {vozik.sirka} cm
+                        {vozik.šířka} cm
                       </Text>
                     </View>
                     <View style={{ alignItems: "center" }}>
@@ -93,12 +93,12 @@ export default function DefaultVozik({ vozik }) {
                     </View>
                     <View style={{ alignItems: "center" }}>
                       <Text style={{ fontFamily: "RobotoBold", fontSize: 20 }}>
-                        Délka:
+                        Výška:
                       </Text>
                       <Text
                         style={{ fontFamily: "RobotoRegular", fontSize: 17 }}
                       >
-                        {vozik.delka} cm
+                        {vozik.výška} cm
                       </Text>
                     </View>
                   </View>

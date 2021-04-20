@@ -72,7 +72,7 @@ export default function AddVozik({ navigation }) {
                       justifyContent: "space-between",
                       width: "100%",
                       paddingBottom: 10,
-
+                      paddingHorizontal: 30,
                       alignItems: "center",
                     }}
                   >

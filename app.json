@@ -1,10 +1,12 @@
 {
   "expo": {
-    "name": "vozickov",
+    "name": "Vozickov",
+    "description": "Aplikace pro rezervaci voziku",
     "slug": "vozickov",
-    "version": "1.0.0",
+    "version": "3.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "privacy": "hidden",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -17,15 +19,19 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "host.exp.vozickov.cz",
+      "buildNumber": "3.0.0"
     },
-    "android": {
+    "android": {       
+      "package": "host.exp.vozickov.cz",
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       }
-    },
-    "web": {
+     },
+     "web": {
       "favicon": "./assets/favicon.png"
     }
   }

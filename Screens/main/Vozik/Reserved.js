@@ -42,7 +42,7 @@ export default function Reserved({ onRemove, vozik }) {
                 style={{
                   fontFamily: "RobotoBold",
                   fontSize: 35,
-                  textDecorationLine: "underline",
+                  //textDecorationLine: "underline",
                 }}
               >
                 {vozik.name}
@@ -55,7 +55,7 @@ export default function Reserved({ onRemove, vozik }) {
                   style={{
                     fontFamily: "RobotoBold",
                     fontSize: 20,
-                    textDecorationLine: "underline",
+                    //textDecorationLine: "underline",
                   }}
                 >
                   Rezervováno:{" "}
@@ -89,9 +89,9 @@ export default function Reserved({ onRemove, vozik }) {
                         Šířka:
                       </Text>
                       <Text
-                        style={{ fontFamily: "RobotoRegular", fontSize: 20 }}
+                        style={{ fontFamily: "RobotoRegular", fontSize: 18 }}
                       >
-                        {vozik.sirka} cm
+                        {vozik.šířka} cm
                       </Text>
                     </View>
 
@@ -100,7 +100,7 @@ export default function Reserved({ onRemove, vozik }) {
                         Hloubka:
                       </Text>
                       <Text
-                        style={{ fontFamily: "RobotoRegular", fontSize: 20 }}
+                        style={{ fontFamily: "RobotoRegular", fontSize: 18 }}
                       >
                         {vozik.hloubka} cm
                       </Text>
@@ -108,12 +108,12 @@ export default function Reserved({ onRemove, vozik }) {
 
                     <View style={styles.numberContainer}>
                       <Text style={{ fontFamily: "RobotoBold", fontSize: 20 }}>
-                        Délka:
+                        Výška:
                       </Text>
                       <Text
-                        style={{ fontFamily: "RobotoRegular", fontSize: 20 }}
+                        style={{ fontFamily: "RobotoRegular", fontSize: 18 }}
                       >
-                        {vozik.delka} cm
+                        {vozik.výška} cm
                       </Text>
                     </View>
                   </View>

@@ -14,12 +14,21 @@ import { fetchVoziky, fetchUserVoziky } from "../../Redux/Action/index";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import _ from "lodash";
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs(["Setting a timer"]);
 
 function Feed(props) {
   const { allVoziky, navigation } = props;
   const [voziky, setVoziky] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-  const [columns] = useState(["Sirka", "Delka", "Hloubka", "Rezervace"]);
+  const [columns] = useState([
+    "Číslo",
+    "Šířka",
+    "Výška",
+    "Hloubka",
+    "Rezervace",
+  ]);
   const [direction, setDirection] = useState(null);
   const [selectedColumn, setSelectedColumn] = useState(null);
 
@@ -35,7 +44,6 @@ function Feed(props) {
   useEffect(() => {
     let isRendered = true;
     setVoziky(allVoziky);
-    console.log(allVoziky);
     return () => {
       isRendered = false;
     };
@@ -83,7 +91,7 @@ function Feed(props) {
           })}
         </View>
         <FlatList
-          keyExtractor={(item, index) => item.id}
+          keyExtractor={(item) => item.id}
           refreshControl={
             <RefreshControl
               progressBackgroundColor="blue"
@@ -104,22 +112,35 @@ function Feed(props) {
                     backgroundColor: index % 2 == 1 ? "#F0FBFC" : "white",
                   }}
                 >
-                  <View style={{ justifyContent: "center" }}>
-                    <Text style={{ fontSize: 17, fontFamily: "RobotoBold" }}>
-                      {item.name}
-                    </Text>
-                  </View>
                   <View
                     style={{
                       flexDirection: "row",
-                      flex: 1,
-                      alignItems: "center",
-                      justifyContent: "space-evenly",
+                      justifyContent: "space-between",
+                      paddingHorizontal: 25,
+                      paddingBottom: 5,
                     }}
                   >
-                    <Text>{item.sirka}</Text>
-                    <Text>{item.delka}</Text>
-                    <Text>{item.hloubka}</Text>
+                    <View
+                      style={{
+                        justifyContent: "flex-start",
+
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 17,
+                          fontFamily: "RobotoBold",
+                          paddingRight: 10,
+                        }}
+                      >
+                        {item.číslo}.
+                      </Text>
+                      <Text style={{ fontSize: 20, fontFamily: "RobotoBold" }}>
+                        {item.name}
+                      </Text>
+                    </View>
                     {item.rezervace === null ? (
                       <MaterialCommunityIcons
                         name="human-wheelchair"
@@ -134,6 +155,33 @@ function Feed(props) {
                       />
                     )}
                   </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      flex: 1,
+                      alignItems: "center",
+                      justifyContent: "space-evenly",
+                    }}
+                  >
+                    <View style={{ flexDirection: "row" }}>
+                      <Text style={{ fontWeight: "700", paddingRight: 5 }}>
+                        Šířka:
+                      </Text>
+                      <Text>{item.šířka} cm</Text>
+                    </View>
+                    <View style={{ flexDirection: "row" }}>
+                      <Text style={{ fontWeight: "700", paddingRight: 5 }}>
+                        Výška:
+                      </Text>
+                      <Text>{item.výška} cm</Text>
+                    </View>
+                    <View style={{ flexDirection: "row" }}>
+                      <Text style={{ fontWeight: "700", paddingRight: 5 }}>
+                        Hloubka:
+                      </Text>
+                      <Text>{item.hloubka} cm</Text>
+                    </View>
+                  </View>
                 </View>
               </Card>
             </TouchableOpacity>
@@ -146,19 +194,17 @@ function Feed(props) {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
     flex: 1,
   },
   itemContainer: {
     flex: 1,
-    flexDirection: "row",
     paddingVertical: 20,
     paddingHorizontal: 10,
     borderRadius: 9,
   },
   tableHeader: {
+    justifyContent: "space-between",
     flexDirection: "row",
-    justifyContent: "space-evenly",
     alignItems: "flex-end",
     backgroundColor: "white",
     borderBottomEndRadius: 15,
@@ -173,7 +219,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   columnHeader: {
-    width: "30%",
     justifyContent: "center",
     alignItems: "center",
   },
