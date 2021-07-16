@@ -6,6 +6,7 @@ import VozikScreen from "./Screens/main/Vozik";
 import Admin from "./Screens/Admin/Index";
 import AddVozik from "./Screens/Admin/AdminVozik/AddVozik";
 import SaveVozik from "./Screens/Admin/AdminVozik/SaveVozik";
+import EditVozik from "./Screens/Admin/AdminVozik/EditVozik";
 import MainScreen from "./Screens/Main";
 import * as firebase from "firebase";
 import LandingScreen from "./Screens/Auth/Landing";
@@ -115,6 +116,7 @@ export default class App extends Component {
               />
               <Stack.Screen name="AddVozik" component={AddVozik} />
               <Stack.Screen name="SaveVozik" component={SaveVozik} />
+              <Stack.Screen name="EditVozik" component={EditVozik} />
             </Stack.Navigator>
           </NavigationContainer>
         </Provider>

@@ -25,7 +25,6 @@ function SaveVozik(props) {
   const [výška, setVyska] = useState(null);
   const [číslo, setCislo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  console.log(props);
 
   const uploadImage = async () => {
     if (

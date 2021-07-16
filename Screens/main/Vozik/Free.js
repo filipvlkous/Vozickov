@@ -11,8 +11,11 @@ import { ButtonOutline } from "../../../Shared/Button";
 import ModalVozik from "../ModalVozik";
 import Card from "../../../Shared/Card";
 import { Colors } from "../../../Styles/Global";
+import firebase from "firebase";
+
 export default function Free({ navigation, id, vozik }) {
   const [modalVisible, setModalVisible] = useState(false);
+  console.log(vozik);
   return (
     <ImageBackground
       style={{ width: "100%", height: "100%" }}
@@ -92,6 +95,15 @@ export default function Free({ navigation, id, vozik }) {
                     justifyContent: "space-evenly",
                   }}
                 ></View>
+              </View>
+            </Card>
+          </View>
+          <View style={{ marginHorizontal: 35 }}>
+            <Card>
+              <View style={{ padding: 15, paddingLeft: 30 }}>
+                <Text
+                  style={{ fontFamily: "RobotoRegular", fontSize: 17 }}
+                ></Text>
               </View>
             </Card>
           </View>

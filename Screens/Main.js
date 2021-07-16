@@ -21,7 +21,6 @@ class Main extends Component {
     this.props.clearData();
     this.props.fetchVoziky();
     this.props.fetchUser();
-    this.props.fetchUserVoziky();
   }
 
   render() {
@@ -54,7 +53,6 @@ class Main extends Component {
           name="Profile"
           component={profileScreen}
           options={{
-            tabBarBadge: this.props.userVoziky.length,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons
                 name="account-circle-outline"
@@ -82,12 +80,8 @@ class Main extends Component {
 const mapStateToProps = (store) => ({
   currentUser: store.userState.currentUser,
   allVoziky: store.userState.allVoziky,
-  userVoziky: store.userState.userVoziky,
 });
 const mapDispatchProps = (dispatch) =>
-  bindActionCreators(
-    { fetchUser, clearData, fetchVoziky, fetchUserVoziky },
-    dispatch
-  );
+  bindActionCreators({ fetchUser, clearData, fetchVoziky }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchProps)(Main);

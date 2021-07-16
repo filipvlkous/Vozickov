@@ -157,17 +157,13 @@ export default function Reserved({ onRemove, vozik }) {
 />;
 const styles = StyleSheet.create({
   numberContainer: {
-    //flexDirection: "row",
     alignItems: "center",
-    //backgroundColor: "red",
   },
 
   img: {
     width: "90%",
     height: 300,
     borderRadius: 30,
-    // borderBottomLeftRadius: 30,
-    // borderBottomRightRadius: 30,
   },
   imgContainer: {
     alignItems: "center",
@@ -181,9 +177,6 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     borderRadius: 30,
     backgroundColor: Colors.primeColor,
-    // borderBottomRightRadius: 30,
-    // borderBottomLeftRadius: 30,
-    //marginVertical: 6,
   },
   button: {
     alignItems: "center",

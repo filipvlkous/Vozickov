@@ -126,14 +126,13 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     alignItems: "center",
-    flexDirection: "row",
     justifyContent: "space-evenly",
   },
 
   title: {
     fontSize: 14,
     fontWeight: "bold",
-    marginBottom: 5,
+    marginBottom: 1,
     color: "#666",
   },
 });

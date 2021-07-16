@@ -81,7 +81,7 @@ export default function Landing({ navigation }) {
           <View style={{ marginTop: 25, alignItems: "center" }}>
             <ButtonCustom title="Přihlásit" onPress={() => onLogin()} />
           </View>
-          <View style={styles.neboContainer}>
+          {/* <View style={styles.neboContainer}>
             <Text style={styles.nebo}> Nebo</Text>
           </View>
           {Platform.OS === "ios" ? (
@@ -97,7 +97,7 @@ export default function Landing({ navigation }) {
                 onPress={() => navigation.navigate("Register")}
               />
             </View>
-          )}
+          )} */}
         </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

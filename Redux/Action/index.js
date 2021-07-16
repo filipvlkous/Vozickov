@@ -4,7 +4,6 @@ import {
   CLEAR_DATA,
   USER_STATE_CHANGE,
   GET_ALL_VOZIKY,
-  GET_USER_VOZIKY,
   GET_ALL_USERS,
 } from "../Constants/index";
 
@@ -31,29 +30,12 @@ export function fetchUser() {
   };
 }
 
-export function fetchUserVoziky() {
-  return (dispatch) => {
-    firebase
-      .firestore()
-      .collection("voziky")
-      .where("rezervace", "==", firebase.auth().currentUser.uid)
-      .get()
-      .then((snapshot) => {
-        let userVoziky = snapshot.docs.map((doc) => {
-          const data = doc.data();
-          const id = doc.id;
-          return { id, ...data };
-        });
-        dispatch({ type: GET_USER_VOZIKY, userVoziky });
-      });
-  };
-}
-
 export function fetchVoziky() {
   return (dispatch) => {
     firebase
       .firestore()
       .collection("voziky")
+      .orderBy("číslo", "asc")
       .get()
       .then((snapshot) => {
         let allVoziky = snapshot.docs.map((doc) => {

@@ -10,21 +10,21 @@ import DefaultVozik from "./Vozik/DefaultVozik";
 
 function Vozik(props) {
   const { id } = props.route.params;
-  const [vozik, setVozik] = useState(null);
+  const [vozik, setVozik] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchVozik = () => {
-    setVozik(props.allVoziky.find((obj) => obj.id === id));
+  const fetchVozik = async () => {
+    const vuz = await (
+      await firebase.firestore().collection("voziky").doc(id).get()
+    ).data();
+    setVozik(vuz);
     setIsLoading(false);
   };
 
   useEffect(() => {
-    let isRendered = true;
     fetchVozik();
-    return () => {
-      isRendered = false;
-    };
-  }, [id]);
+    props.fetchVoziky();
+  }, []);
 
   const onRemove = () => {
     Alert.alert("Uvolnit", "Přejete si vozík uvolnit?", [
@@ -32,13 +32,12 @@ function Vozik(props) {
       {
         text: "Ano",
         onPress: async () => {
-          firebase
+          await firebase
             .firestore()
             .collection("voziky")
             .doc(id)
-            .update({ rezervace: null });
-          await props.fetchVoziky();
-          await props.fetchUserVoziky();
+            .update({ rezervace: null })
+            .then(props.fetchVoziky());
           props.navigation.popToTop();
         },
       },
@@ -81,6 +80,6 @@ const mapStateToProps = (store) => ({
   allVoziky: store.userState.allVoziky,
 });
 const mapDispatchProps = (dispatch) =>
-  bindActionCreators({ fetchVoziky, fetchUserVoziky }, dispatch);
+  bindActionCreators({ fetchVoziky }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchProps)(Vozik);

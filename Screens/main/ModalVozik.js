@@ -11,7 +11,7 @@ import {
 import { connect } from "react-redux";
 import { FontAwesome } from "@expo/vector-icons";
 import { bindActionCreators } from "redux";
-import { fetchVoziky, fetchUserVoziky } from "../../Redux/Action/index";
+import { fetchVoziky } from "../../Redux/Action/index";
 import firebase from "firebase";
 require("firebase/firestore");
 import { globalStyles, Colors } from "../../Styles/Global";
@@ -82,7 +82,7 @@ function ModalVozik(props) {
                   {
                     text: "Ano",
                     onPress: async () => {
-                      firebase
+                      await firebase
                         .firestore()
                         .collection("voziky")
                         .doc(props.id)
@@ -92,10 +92,9 @@ function ModalVozik(props) {
                           fyzioFirstName: props.currentUser.data.firstName,
                           fyzioLastName: props.currentUser.data.lastName,
                           rezervace: props.currentUser.uid,
-                          creation: new Date().toLocaleDateString("en-GB"),
-                        });
-                      await props.fetchVoziky();
-                      await props.fetchUserVoziky();
+                          creation: new Date().toLocaleDateString("cs-CZ"),
+                        })
+                        .then(props.fetchVoziky());
                       await props.navigation.popToTop();
                       await props.setModalVisible();
                     },
@@ -143,6 +142,6 @@ const mapStateToProps = (store) => ({
   currentUser: store.userState.currentUser,
 });
 const mapDispatchProps = (dispatch) =>
-  bindActionCreators({ fetchVoziky, fetchUserVoziky }, dispatch);
+  bindActionCreators({ fetchVoziky }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchProps)(ModalVozik);

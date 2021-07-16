@@ -23,7 +23,7 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  // DODELAT CINFIRM PASSWORDS
+
   const onRegister = () => {
     if (password === passwordConfirm) {
       firebase
@@ -46,7 +46,9 @@ export default function Register() {
 
   return (
     <KeyboardAvoidingView
-      style={Platform.OS === "ios" ? { flex: 1 } : { flex: 1 }}
+      keyboardVerticalOffset={80}
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView style={{ marginVertical: 30 }}>

@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import {
-  fetchVoziky,
-  clearData,
-  fetchUserVoziky,
-} from "../../Redux/Action/index";
+import { fetchVoziky, clearData } from "../../Redux/Action/index";
 import { bindActionCreators } from "redux";
 import {
   Alert,
@@ -22,13 +18,17 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import firebase from "firebase";
 
 function Profile(props) {
-  const { currentUser, userVoziky } = props;
+  const { currentUser, allVoziky } = props;
   const [refreshing, setRefreshing] = useState(false);
+
+  const userVozik = allVoziky.filter(
+    (vuz) => vuz.rezervace === currentUser.uid
+  );
+
   const onRefresh = React.useCallback(async () => {
     setRefreshing(true);
     await props.fetchVoziky();
-    await props.fetchUserVoziky();
-    await setTimeout(() => {
+    setTimeout(() => {
       setRefreshing(false);
     }, 1000);
   }, [refreshing]);
@@ -76,7 +76,7 @@ function Profile(props) {
           }
           numColumns={1}
           horizontal={false}
-          data={userVoziky}
+          data={userVozik}
           renderItem={({ item }) => (
             <Card>
               <TouchableOpacity
@@ -130,10 +130,10 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (store) => ({
   currentUser: store.userState.currentUser,
-  userVoziky: store.userState.userVoziky,
+  allVoziky: store.userState.allVoziky,
 });
 
 const mapDispatchProps = (dispatch) =>
-  bindActionCreators({ fetchVoziky, clearData, fetchUserVoziky }, dispatch);
+  bindActionCreators({ fetchVoziky, clearData }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchProps)(Profile);

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Card from "../../Shared/Card";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
-import { fetchVoziky, fetchUserVoziky } from "../../Redux/Action/index";
+import { fetchVoziky } from "../../Redux/Action/index";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import _ from "lodash";
@@ -29,13 +29,12 @@ function Feed(props) {
     "Hloubka",
     "Rezervace",
   ]);
-  const [direction, setDirection] = useState(null);
-  const [selectedColumn, setSelectedColumn] = useState(null);
+  const [direction, setDirection] = useState("asc");
+  const [selectedColumn, setSelectedColumn] = useState("Číslo");
 
   const onRefresh = React.useCallback(async () => {
     setRefreshing(true);
     await props.fetchVoziky();
-    await props.fetchUserVoziky();
     await setTimeout(() => {
       setRefreshing(false);
     }, 1000);
@@ -239,6 +238,6 @@ const mapStateToProps = (store) => ({
 });
 
 const mapDispatchProps = (dispatch) =>
-  bindActionCreators({ fetchVoziky, fetchUserVoziky }, dispatch);
+  bindActionCreators({ fetchVoziky }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchProps)(Feed);

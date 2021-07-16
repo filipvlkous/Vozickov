@@ -67,21 +67,43 @@ function AdminVoziky(props) {
           }
           renderItem={({ item }) => (
             <View style={styles.cardContainer}>
-              <View style={styles.card}>
-                <View style={styles.cardChiled}>
-                  <Image
-                    style={{
-                      borderColor: Colors.primeColor,
-                      borderWidth: 5,
-                      width: 150,
-                      height: 100,
-                      borderRadius: 9,
-                    }}
-                    source={{ uri: item.downloadURL }}
-                  />
-                  <Text style={styles.title}>{item.name}</Text>
+              <TouchableOpacity
+                activeOpacity={0.9}
+                onPress={() => {
+                  props.navigation.navigate("EditVozik", { id: item.id });
+                }}
+              >
+                <View style={styles.card}>
+                  <View style={styles.cardChiled}>
+                    <Image
+                      style={{
+                        borderColor: Colors.primeColor,
+                        borderWidth: 5,
+                        width: 150,
+                        height: 100,
+                        borderRadius: 9,
+                      }}
+                      source={{ uri: item.downloadURL }}
+                    />
+                    <View style={{ maxWidth: 150 }}>
+                      <View style={{ flexDirection: "row" }}>
+                        <Text style={styles.title}>{item.číslo}. </Text>
+                        <Text style={styles.title}>{item.name}</Text>
+                      </View>
+                      {item.rezervace ? (
+                        <View style={{ paddingLeft: 40, top: 5 }}>
+                          <View style={{ flexDirection: "row" }}>
+                            <Text>{item.fyzioFirstName}</Text>
+                            <Text style={{ paddingLeft: 4 }}>
+                              {item.fyzioLastName}
+                            </Text>
+                          </View>
+                        </View>
+                      ) : null}
+                    </View>
+                  </View>
                 </View>
-              </View>
+              </TouchableOpacity>
             </View>
           )}
           renderHiddenItem={({ item }) => (
@@ -156,8 +178,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontFamily: "RobotoBold",
-    marginBottom: 5,
     paddingLeft: 10,
+
     textTransform: "uppercase",
   },
 
