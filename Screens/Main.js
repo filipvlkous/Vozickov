@@ -1,12 +1,6 @@
 import React, { Component } from "react";
-import * as firebase from "firebase";
 require("firebase/auth");
-import {
-  fetchUser,
-  clearData,
-  fetchVoziky,
-  fetchUserVoziky,
-} from "../Redux/Action";
+import { fetchUser, clearData, fetchVoziky } from "../Redux/Action";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";

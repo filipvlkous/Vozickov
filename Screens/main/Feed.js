@@ -102,7 +102,9 @@ function Feed(props) {
           data={voziky}
           renderItem={({ item, index }) => (
             <TouchableOpacity
-              onPress={() => navigation.navigate("Vozik", { id: item.id })}
+              onPress={() => {
+                navigation.navigate("Vozik", { id: item.id });
+              }}
             >
               <Card>
                 <View

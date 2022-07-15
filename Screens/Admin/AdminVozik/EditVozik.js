@@ -17,7 +17,8 @@ import { bindActionCreators } from "redux";
 import { fetchVoziky } from "../../../Redux/Action/index";
 import Card from "../../../Shared/Card";
 import { Colors } from "../../../Styles/Global";
-
+import VozikLO from "./VozikLO";
+import Revize from "./Revize";
 function EditVozik(props) {
   const { id } = props.route.params;
   const [vozik, setVozik] = useState(null);
@@ -25,20 +26,19 @@ function EditVozik(props) {
   const [hloubka, setHloubka] = useState(null);
   const [sirka, setSirka] = useState(null);
   const [vyska, setVyska] = useState(null);
+  const [revize, setRevize] = useState([]);
 
-  const fetchVozik = () => {
-    setVozik(props.allVoziky.find((obj) => obj.id === id));
+  const fetchVozik = async () => {
+    const vuz = await props.allVoziky.find((obj) => obj.id === id);
+    setVozik(vuz);
     setIsLoading(false);
+    console.log("fetchVozik EditVozik");
   };
 
   useEffect(() => {
-    let isRendered = true;
     fetchVozik();
-
-    return () => {
-      isRendered = false;
-    };
-  });
+  }),
+    [id];
 
   const handleVyska = () => {
     let vys;
@@ -193,6 +193,8 @@ function EditVozik(props) {
                 </Card>
               ) : null}
 
+              <VozikLO id={id} />
+              <Revize id={id} revize={revize} />
               <Card>
                 <View style={{ paddingVertical: 20 }}>
                   <View
@@ -239,7 +241,7 @@ function EditVozik(props) {
                         onPress={handleVyska}
                         style={styles.ButtonContainer}
                       >
-                        <Text style={styles.ButtonText}>Upravit Vysku</Text>
+                        <Text style={styles.ButtonText}>Upravit Výšku</Text>
                       </TouchableOpacity>
                     </View>
 
@@ -282,7 +284,7 @@ function EditVozik(props) {
                         onPress={handleSirka}
                         style={styles.ButtonContainer}
                       >
-                        <Text style={styles.ButtonText}>Upravit Sirku</Text>
+                        <Text style={styles.ButtonText}>Upravit Šířku</Text>
                       </TouchableOpacity>
                     </View>
 

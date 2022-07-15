@@ -3,7 +3,7 @@ import { Alert, View, Text, ImageBackground } from "react-native";
 import firebase from "firebase";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { fetchVoziky, fetchUserVoziky } from "../../Redux/Action/index";
+import { fetchVoziky } from "../../Redux/Action/index";
 import Reserved from "./Vozik/Reserved";
 import Free from "./Vozik/Free";
 import DefaultVozik from "./Vozik/DefaultVozik";
@@ -12,19 +12,42 @@ function Vozik(props) {
   const { id } = props.route.params;
   const [vozik, setVozik] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [comments, setComments] = useState(null);
 
   const fetchVozik = async () => {
     const vuz = await (
       await firebase.firestore().collection("voziky").doc(id).get()
     ).data();
+
     setVozik(vuz);
+  };
+
+  const fetchComments = async () => {
+    await firebase
+      .firestore()
+      .collection("voziky")
+      .doc(id)
+      .collection("comments")
+      .get()
+      .then((snap) =>
+        setComments(
+          snap.docs.map((doc) => {
+            return { ...doc.data(), id: doc.id };
+          })
+        )
+      );
+  };
+
+  const fetchData = async () => {
+    await fetchVozik();
+    await fetchComments();
     setIsLoading(false);
   };
 
   useEffect(() => {
-    fetchVozik();
+    fetchData();
     props.fetchVoziky();
-  }, []);
+  }, [id]);
 
   const onRemove = () => {
     Alert.alert("Uvolnit", "Přejete si vozík uvolnit?", [
@@ -66,12 +89,30 @@ function Vozik(props) {
           navigation={props.navigation}
           vozik={vozik}
           onRemove={onRemove}
+          fetchComments={fetchComments}
+          comments={comments}
+          id={id}
         />
       );
     case null:
-      return <Free id={id} vozik={vozik} navigation={props.navigation} />;
+      return (
+        <Free
+          id={id}
+          vozik={vozik}
+          comments={comments}
+          navigation={props.navigation}
+          fetchComments={fetchComments}
+        />
+      );
     default:
-      return <DefaultVozik vozik={vozik} />;
+      return (
+        <DefaultVozik
+          vozik={vozik}
+          fetchComments={fetchComments}
+          comments={comments}
+          id={id}
+        />
+      );
   }
 }
 

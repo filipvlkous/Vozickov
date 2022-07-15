@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   View,
   Text,
@@ -16,10 +16,12 @@ import firebase from "firebase";
 require("firebase/firestore");
 import { globalStyles, Colors } from "../../Styles/Global";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Picker } from "@react-native-picker/picker";
 
 function ModalVozik(props) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [selectedLO, setSelectedLO] = useState("LO1");
 
   return (
     <Modal
@@ -72,11 +74,38 @@ function ModalVozik(props) {
           onChangeText={(t) => setLastName(t)}
           style={globalStyles.input}
         />
+        <View>
+          <View style={{ flexDirection: "row", marginHorizontal: 60 }}>
+            <MaterialCommunityIcons
+              name="home-account"
+              size={26}
+              color={Colors.secondColor}
+            />
+            <Text style={styles.text}>LUŽKOVÉ ODDĚLENÍ</Text>
+          </View>
+          <Picker
+            style={{ marginHorizontal: 48 }}
+            selectedValue={selectedLO}
+            onValueChange={(itemValue, itemIndex) => setSelectedLO(itemValue)}
+          >
+            <Picker.Item label="LO1" value="LO1" />
+            <Picker.Item label="LO2" value="LO2" />
+            <Picker.Item label="LO3" value="LO3" />
+            <Picker.Item label="LO4" value="LO4" />
+            <Picker.Item label="LO5" value="LO5" />
+            <Picker.Item label="LO6" value="LO6" />
+            <Picker.Item label="LO7" value="LO7" />
+          </Picker>
+        </View>
         <View style={{ alignItems: "center" }}>
           <TouchableOpacity
             style={styles.ButtonContainer}
             onPress={() => {
-              if (firstName.length >= 2 && lastName.length >= 2) {
+              if (
+                firstName.length >= 2 &&
+                lastName.length >= 2 &&
+                selectedLO !== null
+              ) {
                 Alert.alert("Rezervace", "Přejete si rezervovat?", [
                   { text: "Ne", style: "cancel" },
                   {
@@ -92,9 +121,20 @@ function ModalVozik(props) {
                           fyzioFirstName: props.currentUser.data.firstName,
                           fyzioLastName: props.currentUser.data.lastName,
                           rezervace: props.currentUser.uid,
+                          lo: selectedLO,
                           creation: new Date().toLocaleDateString("cs-CZ"),
-                        })
-                        .then(props.fetchVoziky());
+                        });
+
+                      firebase
+                        .firestore()
+                        .collection("voziky")
+                        .doc(props.id)
+                        .collection("luzkoveOdd")
+                        .add({
+                          LO: selectedLO,
+                          creation: new Date().toLocaleDateString("cs-CZ"),
+                        });
+                      await props.fetchVoziky();
                       await props.navigation.popToTop();
                       await props.setModalVisible();
                     },

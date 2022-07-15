@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ScrollView,
   Image,
@@ -6,13 +6,26 @@ import {
   Text,
   StyleSheet,
   ImageBackground,
+  TouchableOpacity,
 } from "react-native";
 import { ButtonOutline } from "../../../Shared/Button";
 import Card from "../../../Shared/Card";
 import { Colors } from "../../../Styles/Global";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Comments from "../Comments";
+import ModalComment from "../ModalComment";
+import { AntDesign } from "@expo/vector-icons";
+import ModalCarCode from "../modalCarCode";
 
-export default function Reserved({ onRemove, vozik }) {
+export default function Reserved({
+  onRemove,
+  vozik,
+  comments,
+  fetchComments,
+  id,
+}) {
+  const [modalCommVisible, setModalCommVisible] = useState(false);
+  const [modalQRVisible, setModalQRVisible] = useState(false);
   return (
     <ImageBackground
       style={{ width: "100%", height: "100%" }}
@@ -48,7 +61,45 @@ export default function Reserved({ onRemove, vozik }) {
                 {vozik.name}
               </Text>
             </View>
-
+            <View style={{ marginHorizontal: 45, paddingBottom: 10 }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontFamily: "RobotoBold",
+                      fontSize: 20,
+                      //textDecorationLine: "underline",
+                    }}
+                  >
+                    Revize:{" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: "RobotoBold",
+                      fontSize: 20,
+                    }}
+                  >
+                    {vozik.revize}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    borderWidth: 2,
+                    backgroundColor: "#fff",
+                    position: "absolute",
+                    left: "80%",
+                  }}
+                >
+                  <TouchableOpacity onPress={() => setModalQRVisible(true)}>
+                    <AntDesign name="qrcode" size={54} color="black" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
             <View style={{ marginHorizontal: 45 }}>
               <View style={{ flexDirection: "row" }}>
                 <Text
@@ -74,6 +125,17 @@ export default function Reserved({ onRemove, vozik }) {
             <View style={styles.button}>
               <ButtonOutline title="uvolnit" onPress={() => onRemove()} />
             </View>
+            <ModalComment
+              modalVisible={modalCommVisible}
+              setModalVisible={() => setModalCommVisible(false)}
+              id={id}
+              fetchComments={fetchComments}
+            />
+
+            <ModalCarCode
+              modalVisible={modalQRVisible}
+              setModalVisible={() => setModalQRVisible(false)}
+            />
 
             <View style={{ marginHorizontal: 40 }}>
               <Card>
@@ -123,7 +185,12 @@ export default function Reserved({ onRemove, vozik }) {
 
             <View style={{ marginHorizontal: 40 }}>
               <Card>
-                <View style={{ margin: 15, paddingLeft: 30 }}>
+                <View
+                  style={{
+                    margin: 15,
+                    paddingHorizontal: 30,
+                  }}
+                >
                   <Text style={{ fontFamily: "RobotoBold", fontSize: 20 }}>
                     Fyzioterapeut:
                   </Text>
@@ -132,16 +199,34 @@ export default function Reserved({ onRemove, vozik }) {
                       {vozik.fyzioFirstName} {vozik.fyzioLastName}
                     </Text>
                   </View>
-                  <Text style={{ fontFamily: "RobotoBold", fontSize: 20 }}>
-                    Pacient:
-                  </Text>
-                  <View style={{ flexDirection: "row" }}>
-                    <Text style={{ fontFamily: "RobotoRegular", fontSize: 17 }}>
-                      {vozik.firstName} {vozik.lastName}
-                    </Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <View>
+                      <Text style={{ fontFamily: "RobotoBold", fontSize: 20 }}>
+                        Pacient:
+                      </Text>
+                      <View style={{ flexDirection: "row" }}>
+                        <Text
+                          style={{ fontFamily: "RobotoRegular", fontSize: 17 }}
+                        >
+                          {vozik.firstName} {vozik.lastName}
+                          {"    "} {vozik.lo}
+                        </Text>
+                      </View>
+                    </View>
                   </View>
                 </View>
               </Card>
+              <Comments
+                comments={comments}
+                id={id}
+                fetchComments={fetchComments}
+                setModalVisible={() => setModalCommVisible(true)}
+              />
             </View>
           </View>
         </ScrollView>

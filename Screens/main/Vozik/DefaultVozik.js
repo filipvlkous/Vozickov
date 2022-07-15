@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ScrollView,
   Image,
@@ -6,11 +6,19 @@ import {
   Text,
   StyleSheet,
   ImageBackground,
+  TouchableOpacity,
 } from "react-native";
 import Card from "../../../Shared/Card";
 import { Colors } from "../../../Styles/Global";
+import ModalComment from "../ModalComment";
+import Comments from "../Comments";
+import ModalCarCode from "../modalCarCode";
+import { AntDesign } from "@expo/vector-icons";
 
-export default function DefaultVozik({ vozik }) {
+export default function DefaultVozik({ vozik, id, comments, fetchComments }) {
+  const [modalCommVisible, setModalCommVisible] = useState(false);
+  const [modalQRVisible, setModalQRVisible] = useState(false);
+
   return (
     <ImageBackground
       style={{ width: "100%", height: "100%" }}
@@ -39,14 +47,55 @@ export default function DefaultVozik({ vozik }) {
                 {vozik.name}
               </Text>
             </View>
-
+            <ModalComment
+              modalVisible={modalCommVisible}
+              setModalVisible={() => setModalCommVisible(false)}
+              id={id}
+              fetchComments={fetchComments}
+            />
+            <ModalCarCode
+              modalVisible={modalQRVisible}
+              setModalVisible={() => setModalQRVisible(false)}
+            />
+            <View style={{ marginHorizontal: 45, paddingBottom: 10 }}>
+              <View style={{ flexDirection: "row" }}>
+                <Text
+                  style={{
+                    fontFamily: "RobotoBold",
+                    fontSize: 20,
+                    //textDecorationLine: "underline",
+                  }}
+                >
+                  Revize:{" "}
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: "RobotoBold",
+                    fontSize: 20,
+                  }}
+                >
+                  {vozik.revize}
+                </Text>
+              </View>
+              <View
+                style={{
+                  borderWidth: 2,
+                  backgroundColor: "#fff",
+                  position: "absolute",
+                  left: "80%",
+                }}
+              >
+                <TouchableOpacity onPress={() => setModalQRVisible(true)}>
+                  <AntDesign name="qrcode" size={54} color="black" />
+                </TouchableOpacity>
+              </View>
+            </View>
             <View style={{ marginHorizontal: 45, marginBottom: 10 }}>
               <View style={{ flexDirection: "row" }}>
                 <Text
                   style={{
                     fontFamily: "RobotoBold",
                     fontSize: 20,
-                    textDecorationLine: "underline",
                   }}
                 >
                   Rezervováno:{" "}
@@ -133,6 +182,12 @@ export default function DefaultVozik({ vozik }) {
                   </View>
                 </View>
               </Card>
+              <Comments
+                comments={comments}
+                id={id}
+                fetchComments={fetchComments}
+                setModalVisible={() => setModalCommVisible(true)}
+              />
             </View>
           </View>
         </ScrollView>

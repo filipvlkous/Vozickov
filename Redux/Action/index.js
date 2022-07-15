@@ -1,5 +1,4 @@
 import firebase from "firebase";
-//require("firebase/firestore");
 import {
   CLEAR_DATA,
   USER_STATE_CHANGE,

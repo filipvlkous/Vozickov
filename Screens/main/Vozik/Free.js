@@ -6,16 +6,27 @@ import {
   ImageBackground,
   Image,
   StyleSheet,
+  TouchableOpacity,
 } from "react-native";
 import { ButtonOutline } from "../../../Shared/Button";
 import ModalVozik from "../ModalVozik";
 import Card from "../../../Shared/Card";
 import { Colors } from "../../../Styles/Global";
-import firebase from "firebase";
+import Comments from "../Comments";
+import ModalComment from "../ModalComment";
+import ModalCarCode from "../modalCarCode";
+import { AntDesign } from "@expo/vector-icons";
 
-export default function Free({ navigation, id, vozik }) {
-  const [modalVisible, setModalVisible] = useState(false);
-  console.log(vozik);
+export default function Free({
+  fetchComments,
+  navigation,
+  id,
+  vozik,
+  comments,
+}) {
+  const [modalVozikVisible, setModalVozikVisible] = useState(false);
+  const [modalCommVisible, setModalCommVisible] = useState(false);
+  const [modalQRVisible, setModalQRVisible] = useState(false);
   return (
     <ImageBackground
       style={{ width: "100%", height: "100%" }}
@@ -42,17 +53,60 @@ export default function Free({ navigation, id, vozik }) {
               {vozik.name}
             </Text>
           </View>
-          <View style={styles.button}>
+          <View style={{ marginHorizontal: 45, paddingBottom: 10 }}>
+            <View style={{ flexDirection: "row" }}>
+              <Text
+                style={{
+                  fontFamily: "RobotoBold",
+                  fontSize: 20,
+                  //textDecorationLine: "underline",
+                }}
+              >
+                Revize:{" "}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "RobotoBold",
+                  fontSize: 20,
+                }}
+              >
+                {vozik.revize}
+              </Text>
+            </View>
+            <View
+              style={{
+                borderWidth: 2,
+                backgroundColor: "#fff",
+                position: "absolute",
+                left: "80%",
+              }}
+            >
+              <TouchableOpacity onPress={() => setModalQRVisible(true)}>
+                <AntDesign name="qrcode" size={54} color="black" />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={{ ...styles.button, paddingTop: 30 }}>
             <ButtonOutline
               title="Rezervovat"
-              onPress={() => setModalVisible(true)}
+              onPress={() => setModalVozikVisible(true)}
             />
           </View>
           <ModalVozik
-            modalVisible={modalVisible}
-            setModalVisible={() => setModalVisible(false)}
+            modalVisible={modalVozikVisible}
+            setModalVisible={() => setModalVozikVisible(false)}
             navigation={navigation}
             id={id}
+          />
+          <ModalComment
+            modalVisible={modalCommVisible}
+            setModalVisible={() => setModalCommVisible(false)}
+            id={id}
+            fetchComments={fetchComments}
+          />
+          <ModalCarCode
+            modalVisible={modalQRVisible}
+            setModalVisible={() => setModalQRVisible(false)}
           />
 
           <View style={{ marginHorizontal: 35 }}>
@@ -97,15 +151,12 @@ export default function Free({ navigation, id, vozik }) {
                 ></View>
               </View>
             </Card>
-          </View>
-          <View style={{ marginHorizontal: 35 }}>
-            <Card>
-              <View style={{ padding: 15, paddingLeft: 30 }}>
-                <Text
-                  style={{ fontFamily: "RobotoRegular", fontSize: 17 }}
-                ></Text>
-              </View>
-            </Card>
+            <Comments
+              comments={comments}
+              id={id}
+              fetchComments={fetchComments}
+              setModalVisible={() => setModalCommVisible(true)}
+            />
           </View>
         </ScrollView>
       </View>

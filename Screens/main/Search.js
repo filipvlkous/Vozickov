@@ -66,9 +66,10 @@ function Search(props) {
             data={data}
             renderItem={({ item, index }) => (
               <TouchableOpacity
-                onPress={() =>
-                  props.navigation.navigate("Vozik", { id: item.id })
-                }
+                onPress={() => {
+                  handleSearch("");
+                  props.navigation.navigate("Vozik", { id: item.id });
+                }}
               >
                 <Card>
                   <View

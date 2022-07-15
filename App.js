@@ -112,7 +112,9 @@ export default class App extends Component {
               <Stack.Screen
                 name="MainAdmin"
                 component={Admin}
-                options={{ headerRight: () => <Logout /> }}
+                options={{
+                  headerRight: () => <Logout />,
+                }}
               />
               <Stack.Screen name="AddVozik" component={AddVozik} />
               <Stack.Screen name="SaveVozik" component={SaveVozik} />
